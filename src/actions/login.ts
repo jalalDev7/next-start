@@ -41,8 +41,11 @@ export const login = async (values: z.infer<typeof loginSchema>) => {
     return { success: "Login success" };
   } catch (error) {
     if (error instanceof AuthError) {
-      switch (error.type) {
+      switch (error.name) {
         case "CredentialsSignin":
+          return { error: "Invalid Credentials!" };
+        // TODO : Just fixing probleme in depoyment in vercel that show "v" as message name
+        case "v":
           return { error: "Invalid Credentials!" };
         default:
           return { error: "Something wrong!" };
